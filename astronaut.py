@@ -27,7 +27,11 @@ def parse_color(text):
     elif(text == "red"):
         color = R
     elif(text == "green"):
-        color = G    
+        color = G
+    elif(text == "yellow"):
+        color = Y
+    elif(text == "maroon"):
+        color = M    
     return color    
 
 
@@ -46,6 +50,8 @@ def help():
             blue
             red
             green
+            yellow
+            maroon
         """
     )
 

@@ -1,5 +1,6 @@
 import time
 from neopixel import *
+import copy
 
 from colors import *
 from blinking_eyes import BLINKING_EYES
@@ -53,12 +54,12 @@ class Led_Manager():
         
         
     def get_reverse(self, array):
-        reverse = array
+        reverse = copy.deepcopy(array)
         reverse.reverse()
         return reverse
         
-    def blinking_eyes(self):
-        self.print_array(BLINKING_EYES)
-        self.print_array(self.get_reverse(BLINKING_EYES))
+    def blinking_eyes(self, color):
+        self.print_array(BLINKING_EYES, color) 
+        self.print_array(self.get_reverse(BLINKING_EYES), color)
         self.clear()
 

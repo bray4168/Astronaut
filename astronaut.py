@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import time
+import threading
 from led_manager import Led_Manager
 from colors import *
 
@@ -35,6 +36,18 @@ def parse_color(text):
     return color    
 
 
+def input_thread(command_list):
+    while(True):
+        text = raw_input("#>").split()
+        command_list.append(text)
+        
+        
+def start_input_thread(command_list):
+    thread = threading.Thread(target=input_thread, args=(command_list,))
+    thread.daemon = True
+    thread.start()
+
+
 def help():
     print(
         """
@@ -63,15 +76,23 @@ def help():
 def main():    
     led_manager = Led_Manager()
     
+    command_list = []
+    prev_command = "blinking_eyes"
+    prev_color = False
+    start_input_thread(command_list)
     exit = False
 
-    while(exit != True):
-        text = raw_input("#>").split()
-        
-        command, color = parse_text(text)
-        # No command was typed so keep displaying prompt
-        if(command == False):
-            continue
+    while(exit == False):
+        if(len(command_list) != 0):
+            command, color = parse_text(command_list.pop(0))
+            if(command == False):
+                continue
+            prev_command = command
+            prev_color = color
+        else:
+            command = prev_command
+            color = prev_color
+            
             
         # Figure out what command was sent from cli
         if(command == "exit"):
@@ -100,6 +121,8 @@ def main():
                 led_manager.excited_eyes(color)             
         else:
             print("Not valid command.")
+            prev_command = "blinking_eyes"
+            prev_color = False
             
 
 if __name__ == '__main__':

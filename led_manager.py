@@ -4,6 +4,9 @@ import copy
 
 from colors import *
 from blinking_eyes import BLINKING_EYES
+from heart_eyes import HEART_EYES
+from angry_eyes import ANGRY_EYES
+from excited_eyes import EXCITED_EYES
 
 
 class Led_Manager():
@@ -12,11 +15,11 @@ class Led_Manager():
     LED_PIN = 18
     LED_FREQ_HZ = 800000
     LED_DMA = 10
-    LED_BRIGHTNESS = 64
+    LED_BRIGHTNESS = 128
     LED_INVERT = False
     LED_CHANNEL = 0
     
-    FPS = 5
+    FPS = 10
     FRAME_RATE = 1.0 /FPS
     
     def __init__(self):        
@@ -30,11 +33,14 @@ class Led_Manager():
         self.matrix.begin()
         self.matrix.setBrightness(self.LED_BRIGHTNESS)
     
-    def clear(self):
+    def clear_and_show(self):
         for i in range(self.LED_COUNT):
             self.matrix.setPixelColor(i, Color(0,0,0))
         self.matrix.show()
-
+        
+    def clear(self):
+        for i in range(self.LED_COUNT):
+            self.matrix.setPixelColor(i, Color(0,0,0))
 
     def print_array(self, array, color=Color(255, 255, 255)):
         # Loop through the array and print the pictures to the leds
@@ -58,8 +64,26 @@ class Led_Manager():
         reverse.reverse()
         return reverse
         
-    def blinking_eyes(self, color):
+    def blinking_eyes(self, color=W):
         self.print_array(BLINKING_EYES, color) 
         self.print_array(self.get_reverse(BLINKING_EYES), color)
-        self.clear()
+        self.clear_and_show()
+        
+    def heart_eyes(self, color=R):
+        self.print_array(HEART_EYES, color) 
+        self.print_array(self.get_reverse(HEART_EYES), color)
+        self.clear_and_show()
+        
+    def angry_eyes(self, color=R):
+        self.print_array(ANGRY_EYES, color) 
+        self.print_array(self.get_reverse(ANGRY_EYES), color)
+        self.clear_and_show()
+        
+    def excited_eyes(self, color=W):
+        self.print_array(EXCITED_EYES, color) 
+        self.print_array(self.get_reverse(EXCITED_EYES), color)
+        self.clear_and_show()
+        
+        
+        
 

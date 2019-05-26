@@ -13,7 +13,7 @@ def parse_text(text):
     # Set the command and color text if valid
     command = text[0].lower()    
     if(len(text) == 1):
-        color = W
+        color = False
     elif(len(text) == 2):
         color = parse_color(text[1].lower())
 
@@ -21,7 +21,7 @@ def parse_text(text):
 
 
 def parse_color(text):
-    color = W
+    color = False
     if(text == "blue"):
         color = B
     elif(text == "red"):
@@ -31,7 +31,7 @@ def parse_color(text):
     elif(text == "yellow"):
         color = Y
     elif(text == "maroon"):
-        color = M    
+        color = M
     return color    
 
 
@@ -42,8 +42,12 @@ def help():
             exit - leaves the program
             help - prints this help text
             
-            blinking_eyes(color) - creates blinking eyes animates, 
-                color can be passed in
+            blinking_eyes(color) - creates blinking eyes animates
+            heart_eyes(color) - creates hearts for eyes that swell
+            angry_eyes(color) - shows open eyes that become angry/frustrated
+            excited_eyes(color) - show excited eyes that close with excitement
+            
+            *(color) tag indicates that colors can be passed in and changed
         
         Colors: List of supported colors
             white
@@ -75,7 +79,25 @@ def main():
         elif(command == "help"):
             help()
         elif(command == "blinking_eyes"):
-            led_manager.blinking_eyes(color)
+            if(color == False):
+                led_manager.blinking_eyes()
+            else:
+                led_manager.blinking_eyes(color)
+        elif(command == "heart_eyes"):
+            if(color == False):
+                led_manager.heart_eyes()
+            else:
+                led_manager.heart_eyes(color)
+        elif(command == "angry_eyes"):
+            if(color == False):
+                led_manager.angry_eyes()
+            else:
+                led_manager.angry_eyes(color)  
+        elif(command == "excited_eyes"):
+            if(color == False):
+                led_manager.excited_eyes()
+            else:
+                led_manager.excited_eyes(color)             
         else:
             print("Not valid command.")
             
